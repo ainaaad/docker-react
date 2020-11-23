@@ -1,0 +1,15 @@
+# We need super user permisons
+sudo: required
+
+# Undrestant that we need docker install
+services:
+  - docker
+
+# Before the test run we  need to build
+before_install:
+  - docker build -t ainadomenech/docker-react -f Dockerfile.dev .
+# -t <userDocker/repo> Tag this build
+
+# Contains all the diferents commans that we need to be exectued
+script:
+  - docker run -e CI=true  ainadomenech/docker-react npm run test
