@@ -1,18 +1,17 @@
-version: "3" #verison of docker-compose
+version: "3"
 services:
   web:
     stdin_open: true
+    environment:
+      - CHOKIDAR_USEPOLLING=true
     build:
-      context: . #Current directory
+      context: .
       dockerfile: Dockerfile.dev
     ports:
       - "3000:3000"
     volumes:
       - /app/node_modules
       - .:/app
-    environment:
-      - CHOKIDAR_USEPOLLING=true
-  # Second solutions is create a new services/contariner for a test
   tests:
     stdin_open: true
     build:
@@ -21,6 +20,4 @@ services:
     volumes:
       - /app/node_modules
       - .:/app
-    command: ["npm", "run", "test"] #Overwrite a command
-    environment:
-      - CHOKIDAR_USEPOLLING=true
+    command: ["npm", "run", "test"]
